@@ -13,7 +13,6 @@ class PilbotMovements(Node):
         self.declare_parameter("angular_speed", 0.5)
         self.declare_parameter("distance_to_travel", 10.0) # metre => for rectangle_movement and line
 
-
         self.pub = self.create_publisher(TwistStamped, "pilbot_controller/cmd_vel", 10)
         self.timer =  self.create_timer(0.25, self.timer_callback)
 
@@ -23,7 +22,9 @@ class PilbotMovements(Node):
         self.distance_to_travel = self.get_parameter("distance_to_travel").get_parameter_value().double_value
 
         self.get_logger().info(f"Paramters: movement type {self.movement_type}, linear_speed {self.linear_speed}, angular_speed {self.angular_speed}, travel distance {self.distance_to_travel}")
-    
+
+        self.pose_sub = self.create_subscription() # Gazebo pose subscription
+
     def timer_callback(self):
 
         published_msg = TwistStamped()
@@ -37,6 +38,12 @@ class PilbotMovements(Node):
             pass
 
         self.pub.publish(published_msg)
+
+    def rectangle_movement(self, vehicle_pose):
+        x, y, theta = vehicle_pose.x, vehicle_pose.y, vehicle_pose.theta
+
+    def vehicle_pose_callback(self):
+        pass
 
 def main():
     rclpy.init()
