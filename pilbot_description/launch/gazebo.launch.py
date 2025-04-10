@@ -57,7 +57,8 @@ def generate_launch_description():
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/imu1@sensor_msgs/msg/Imu[gz.msgs.IMU",
             "/imu2@sensor_msgs/msg/Imu[gz.msgs.IMU",
-            "/imu3@sensor_msgs/msg/Imu[gz.msgs.IMU"
+            "/imu3@sensor_msgs/msg/Imu[gz.msgs.IMU",
+            "/pilbot/real_pose@nav_msgs/msg/Odometry[gz.msgs.Odometry"
         ]
     )
 

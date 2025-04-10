@@ -2,6 +2,7 @@
 import rclpy
 import pandas as pd
 from rclpy.node import Node
+from nav_msgs.msg import Odometry
 
 from sensor_msgs.msg import Imu
 from threading import Lock
@@ -14,10 +15,16 @@ class ImuLogger(Node):
         self.imu_sub = self.create_subscription(Imu, "imu2", lambda msg: self.imu_callback(msg=msg, imu_id="imu2"), 10)
         self.imu_sub = self.create_subscription(Imu, "imu3", lambda msg: self.imu_callback(msg=msg, imu_id="imu3"), 10)
 
+        self.pilbot_pose_sub = self.create_subscription(Odometry, "pilbot/real_pose", self.pose_callback, 10)
+
         self.df = pd.DataFrame(columns=["time"])
 
         self.buffer = {}
         self.buffer_lock = Lock()
+
+    # pozisyon mesajı birleştirilecek
+    def pose_callback(self, msg):
+        self.get_logger().info(str(msg.pose.pose.position))
 
     def imu_callback(self, imu_id, msg):
         timestamp = self.get_timestamp(msg.header)

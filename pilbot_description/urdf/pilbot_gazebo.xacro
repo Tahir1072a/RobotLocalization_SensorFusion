@@ -46,6 +46,15 @@
             <parameters>$(find pilbot_controller)/config/controller.yaml</parameters> 
         </plugin>
         <plugin filename="ignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"></plugin>
+
+        <plugin filename="ignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
+            <robot_base_frame>base_footprint</robot_base_frame>
+            <odom_topic>pilbot/real_pose</odom_topic>
+            <odom_publish_frequency>200</odom_publish_frequency>
+            <publish_odom_tf>true</publish_odom_tf>
+            <dimensions>3</dimensions>
+        </plugin>
+
     </gazebo>
 
     <!-- bno055 -->
