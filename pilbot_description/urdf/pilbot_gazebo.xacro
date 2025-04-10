@@ -51,12 +51,114 @@
     <!-- bno055 -->
     <!-- Based on bno055 datasheet-->
     <!-- https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bno055-ds000.pdf -->
-    <gazebo reference="imu_link">
-        <sensor name="imu" type="imu">
+    <gazebo reference="imu_link1">
+        <sensor name="imu1" type="imu">
             <always_on>true</always_on>
             <update_rate>100</update_rate>
-            <gz_frame_id>imu_link</gz_frame_id>
-            <topic>imu</topic>
+            <gz_frame_id>imu_link1</gz_frame_id>
+            <topic>imu1</topic>
+            <imu>
+                <angular_velocity>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev> <!-- variance -->
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev>
+                        </noise>
+                    </z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance, noise -->
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance -->
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance -->
+                        </noise>
+                    </z>
+                </linear_acceleration>
+            </imu>
+        </sensor> 
+    </gazebo>
+
+    <gazebo reference="imu_link2">
+        <sensor name="imu2" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <gz_frame_id>imu_link2</gz_frame_id>
+            <topic>imu2</topic>
+            <imu>
+                <angular_velocity>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev> <!-- variance -->
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev>
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.00174532925</stddev>
+                        </noise>
+                    </z>
+                </angular_velocity>
+                <linear_acceleration>
+                    <x>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance, noise -->
+                        </noise>
+                    </x>
+                    <y>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance -->
+                        </noise>
+                    </y>
+                    <z>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0014715</stddev> <!-- variance -->
+                        </noise>
+                    </z>
+                </linear_acceleration>
+            </imu>
+        </sensor> 
+    </gazebo>
+
+    <gazebo reference="imu_link3">
+        <sensor name="imu3" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <gz_frame_id>imu_link3</gz_frame_id>
+            <topic>imu3</topic>
             <imu>
                 <angular_velocity>
                     <x>

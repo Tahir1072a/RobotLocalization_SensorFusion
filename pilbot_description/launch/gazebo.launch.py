@@ -55,7 +55,9 @@ def generate_launch_description():
         executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-            "/imu@sensor_msgs/msg/Imu[gz.msgs.IMU"
+            "/imu1@sensor_msgs/msg/Imu[gz.msgs.IMU",
+            "/imu2@sensor_msgs/msg/Imu[gz.msgs.IMU",
+            "/imu3@sensor_msgs/msg/Imu[gz.msgs.IMU"
         ]
     )
 
