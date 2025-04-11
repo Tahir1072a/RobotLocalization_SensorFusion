@@ -3,7 +3,7 @@ from rclpy.node import Node
 
 from geometry_msgs.msg import TwistStamped
 from nav_msgs.msg import Odometry
-from std_msgs.msg import String
+from pilbot_msgs.msg import MovementCycles
 
 class PilbotMovements(Node):
     def __init__(self):
@@ -13,9 +13,10 @@ class PilbotMovements(Node):
         self.declare_parameter("movement_type", "line") #rectangle, circle, line
         self.declare_parameter("linear_speed", 1.0)
         self.declare_parameter("angular_speed", 0.5)
-        self.declare_parameter("distance_to_travel", 10.0) # metre => for rectangle_movement and line
+        self.declare_parameter("distance_to_travel", 2.0) # metre => for rectangle_movement and line
 
         self.pub = self.create_publisher(TwistStamped, "pilbot_controller/cmd_vel", 10)
+        self.movement_cycle_pub = self.create_publisher(MovementCycles, "movement_cycle", 10)
 
         self.movement_type = self.get_parameter("movement_type").get_parameter_value().string_value
         self.linear_speed = self.get_parameter("linear_speed").get_parameter_value().double_value
@@ -27,6 +28,7 @@ class PilbotMovements(Node):
         self.pose_sub = self.create_subscription(Odometry, "pilbot/real_pose", self.pose_callback , 10) # Gazebo pose subscription
 
         self.initial_pose = {}
+        self.movement_cycle_msg = MovementCycles()
         
         # Vehicle states
         self.initial_move = True
@@ -37,6 +39,7 @@ class PilbotMovements(Node):
         # Line movement
         self.is_moving_forward = False
         self.is_moving_back = False
+        self.turn_num = -0.5
 
         # Rectangle Movement
 
@@ -60,6 +63,7 @@ class PilbotMovements(Node):
             self.is_starting_point = False
             self.is_on_the_path = True
             self.is_moving_forward = True
+            self.turn_num += 1
             self.get_logger().info("Start to moving forward")
         elif self.is_on_the_path and self.is_moving_forward:
             linear_speed = self.linear_speed
@@ -85,6 +89,11 @@ class PilbotMovements(Node):
             self.get_logger().info("Moving backward")
 
         #self.get_logger().info(f"States: start: {self.is_starting_point}, finish: {self.is_finished_point}, on the path: {self.is_on_the_path}, moving forward: {self.is_moving_forward}, moving_backward: {self.is_moving_back}")
+
+        self.movement_cycle_msg.line = int(self.turn_num)
+        self.get_logger().info(str(int(self.turn_num)))
+        self.movement_cycle_pub.publish(self.movement_cycle_msg)
+
         return linear_speed
         
 
