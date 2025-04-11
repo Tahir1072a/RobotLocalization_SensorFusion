@@ -3,13 +3,14 @@ from rclpy.node import Node
 
 from geometry_msgs.msg import TwistStamped
 from nav_msgs.msg import Odometry
-# Sadece circular hareekt tanımlanmıştır!!
+from std_msgs.msg import String
+
 class PilbotMovements(Node):
     def __init__(self):
         super().__init__("pilbot_movements")
         self.get_logger().info("Pilbot Movements Node has been started")
 
-        self.declare_parameter("movement_type", "circle") #rectangle, circle, line
+        self.declare_parameter("movement_type", "line") #rectangle, circle, line
         self.declare_parameter("linear_speed", 1.0)
         self.declare_parameter("angular_speed", 0.5)
         self.declare_parameter("distance_to_travel", 10.0) # metre => for rectangle_movement and line
@@ -25,39 +26,65 @@ class PilbotMovements(Node):
 
         self.pose_sub = self.create_subscription(Odometry, "pilbot/real_pose", self.pose_callback , 10) # Gazebo pose subscription
 
-        self.initial_move = True
         self.initial_pose = {}
+        
+        # Vehicle states
+        self.initial_move = True
+        self.is_starting_point = False
+        self.is_finished_point = False
+        self.is_on_the_path = False
+
+        # Line movement
+        self.is_moving_forward = False
+        self.is_moving_back = False
+
+        # Rectangle Movement
 
     def rectangle_movement(self, vehicle_pose):
         x, y, theta = vehicle_pose.x, vehicle_pose.y, vehicle_pose.z
 
         self.get_logger().info(f"x: {x} y: {y}, z: {theta}")
         
-    # Düzeltilecek
     def line_movement(self, vehicle_pose):
         x, y, theta = vehicle_pose.x, vehicle_pose.y, vehicle_pose.z
         
         if self.initial_move:
             self.initial_pose["x"] = x
             self.initial_move = False
+            self.is_starting_point = True
 
         linear_speed = 0.0
-        is_stop = False
-        is_moving_back = False
 
-        if x >= self.initial_pose["x"] + self.distance_to_travel and not is_moving_back:
-            linear_speed = 0.0
-            is_stop = True
-        elif is_stop and linear_speed == 0.0:
-            is_moving_back = True
-            is_stop = False
-            linear_speed = -self.linear_speed
-        elif not is_moving_back:
+        if self.is_starting_point:
             linear_speed = self.linear_speed
-        elif self.initial_pose >= x:
-            linear_speed = 0.0
-            is_moving_back = False
+            self.is_starting_point = False
+            self.is_on_the_path = True
+            self.is_moving_forward = True
+            self.get_logger().info("Start to moving forward")
+        elif self.is_on_the_path and self.is_moving_forward:
+            linear_speed = self.linear_speed
 
+            if x >= self.initial_pose["x"] + self.distance_to_travel:
+                self.is_finished_point = True
+                self.is_on_the_path = False
+                self.is_moving_forward = False
+            self.get_logger().info("Moving forward")
+        elif self.is_finished_point:
+            linear_speed = -self.linear_speed
+            self.is_finished_point = False
+            self.is_moving_back = True
+            self.is_on_the_path = True
+            self.get_logger().info("Start to moving backward")
+        elif self.is_on_the_path and self.is_moving_back:
+            linear_speed = -self.linear_speed
+
+            if x <= self.initial_pose["x"]:
+                self.is_starting_point = True
+                self.is_on_the_path = False
+                self.is_moving_back = False
+            self.get_logger().info("Moving backward")
+
+        #self.get_logger().info(f"States: start: {self.is_starting_point}, finish: {self.is_finished_point}, on the path: {self.is_on_the_path}, moving forward: {self.is_moving_forward}, moving_backward: {self.is_moving_back}")
         return linear_speed
         
 
