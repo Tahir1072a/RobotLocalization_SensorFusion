@@ -18,7 +18,13 @@ def generate_launch_description():
                    "--controller-manager", "/controller_manager"]
     )
 
+    pilbot_real_pose_broadcaster = Node(
+        package="pilbot_controller",
+        executable="pilbot_real_pose_broadcaster"
+    )
+
     return LaunchDescription([
         joint_state_broadcaster,
+        pilbot_real_pose_broadcaster,
         wheel_controller_spawner
     ])

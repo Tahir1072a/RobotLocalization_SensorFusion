@@ -97,7 +97,8 @@ class ImuLogger(Node):
     
     def cycles_callback(self, cycles):
         line, rectangle, circle = cycles.line, cycles.rectangle, cycles.circle
-
+        
+        # Dosya daha önceden varsa yeni dosya açılabilir. Burayı dinamikleştir..
         if line == 1:
             self.df.to_excel("imu_saved_data.xlsx", index=False)
             self.get_logger().info("Döngü bitmiştir...")

@@ -24,7 +24,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "pilbot_movement = pilbot_controller.pilbot_movements:main"
+            "pilbot_movement = pilbot_controller.pilbot_movements:main",
+            "pilbot_real_pose_broadcaster = pilbot_controller.pilbot_real_pose_broadcaster:main"
         ],
     },
 )

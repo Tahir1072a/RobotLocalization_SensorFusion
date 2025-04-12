@@ -8,6 +8,9 @@ controller_manager:
 
     pilbot_controller:
       type: diff_drive_controller/DiffDriveController
+    
+    pilbot_controller_noisy:
+      type: diff_drive_controller/DiffDriveController
 
 pilbot_controller:
   ros__parameters:
@@ -17,11 +20,11 @@ pilbot_controller:
     right_wheel_names: ["wheel_right_joint"]
 
     publish_rate: 50.0
-    pose_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-    twist_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    pose_covariance_diagonal: [0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01]
+    twist_covariance_diagonal: [0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01]
 
-    wheel_separation: 0.17
-    wheel_radius: 0.033
+    wheel_separation: 0.19 #  + 0.02 error
+    wheel_radius: 0.038    # + 0.005 error
 
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
