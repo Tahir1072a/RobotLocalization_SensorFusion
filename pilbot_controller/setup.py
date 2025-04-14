@@ -25,7 +25,9 @@ setup(
     entry_points={
         'console_scripts': [
             "pilbot_movement = pilbot_controller.pilbot_movements:main",
-            "pilbot_real_pose_broadcaster = pilbot_controller.pilbot_real_pose_broadcaster:main"
+            "real_pose_broadcaster = pilbot_controller.real_pose_broadcaster:main",
+            "simple_controller = pilbot_controller.simple_controller:main",
+            "noisy_controller = pilbot_controller.noisy_controller:main"
         ],
     },
 )

@@ -8,9 +8,9 @@ controller_manager:
 
     pilbot_controller:
       type: diff_drive_controller/DiffDriveController
-    
-    pilbot_controller_noisy:
-      type: diff_drive_controller/DiffDriveController
+
+    simple_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
 
 pilbot_controller:
   ros__parameters:
@@ -19,12 +19,12 @@ pilbot_controller:
     left_wheel_names: ["wheel_left_joint"]
     right_wheel_names: ["wheel_right_joint"]
 
-    publish_rate: 50.0
+    publish_rate: 100.0
     pose_covariance_diagonal: [0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01]
     twist_covariance_diagonal: [0.001, 0.001, 1e-3, 1e-3, 1e-3, 0.01]
 
     wheel_separation: 0.19 #  + 0.02 error
-    wheel_radius: 0.038    # + 0.005 error
+    wheel_radius: 0.038    #  + 0.005 error
 
     wheel_separation_multiplier: 1.0
     left_wheel_radius_multiplier: 1.0
@@ -38,21 +38,10 @@ pilbot_controller:
     publish_wheel_data: true
     enable_odom_tf: true
 
-    linear:
-      x:
-        has_velocity_limits    : true
-        max_velocity           : 1.0  # m/s
-        min_velocity           : -0.5 # m/s
-        has_acceleration_limits: true
-        max_acceleration       : 0.8  # m/s^2
-        min_acceleration       : -0.4 # m/s^2
-        has_jerk_limits        : false
-        max_jerk               : 5.0  # m/s^3
-    angular:
-      z:
-        has_velocity_limits    : true
-        max_velocity           : 1.7  # rad/s
-        has_acceleration_limits: true
-        max_acceleration       : 1.5  # rad/s^2
-        has_jerk_limits        : false
-        max_jerk               : 2.5  # rad/s^3
+
+
+simple_velocity_controller:
+  ros__parameters:
+    joints:
+      - wheel_left_joint
+      - wheel_right_joint

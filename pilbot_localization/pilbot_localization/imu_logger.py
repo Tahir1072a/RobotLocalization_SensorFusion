@@ -13,17 +13,34 @@ class ImuLogger(Node):
     def __init__(self):
         super().__init__("imu_logger")
 
-        self.imu_sub = self.create_subscription(Imu, "imu1", lambda msg: self.imu_callback(msg=msg, imu_id="imu1"), 10)
+        self.imu_sub = self.create_subscription(Imu, "/imu1", lambda msg: self.imu_callback(msg=msg, imu_id="imu1"), 10)
         self.imu_sub = self.create_subscription(Imu, "imu2", lambda msg: self.imu_callback(msg=msg, imu_id="imu2"), 10)
         self.imu_sub = self.create_subscription(Imu, "imu3", lambda msg: self.imu_callback(msg=msg, imu_id="imu3"), 10)
 
         self.pilbot_pose_sub = self.create_subscription(Odometry, "pilbot/real_pose", self.pose_callback, 10)
         self.movement_cycle_sub = self.create_subscription(MovementCycles, "movement_cycles", self.cycles_callback, 10)
+        self.estimated_pose_sub = self.create_subscription(Odometry, "odometry/filtered", self.estimated_pose_callback, 10)
 
         self.df = pd.DataFrame(columns=["time"])
 
         self.buffer = {}
         self.buffer_lock = Lock()
+
+    def estimated_pose_callback(self, msg):
+        timestamp = self.get_timestamp(msg.header)
+        position = msg.pose.pose.position
+
+        if self.buffer.get(timestamp) is None:
+            self.buffer[timestamp] = {}
+        
+        self.buffer[timestamp]["estimated_poses"] = {
+            "pose_x": position.x,
+            "pose_y": position.y,
+            "pose_z": position.z
+        }
+
+        if len(self.buffer[timestamp]) == 5:
+            self.prepare_data(timestamp)
 
     def pose_callback(self, msg):
         timestamp = self.get_timestamp(msg.header)
@@ -39,7 +56,7 @@ class ImuLogger(Node):
                 "pose_z": position.z
             }
         
-        if len(self.buffer[timestamp]) == 4:
+        if len(self.buffer[timestamp]) == 5:
             self.prepare_data(timestamp)
 
 
@@ -61,7 +78,7 @@ class ImuLogger(Node):
                 "gz": angular_velocity.z
             }
         
-        if len(self.buffer[timestamp]) == 4:
+        if len(self.buffer[timestamp]) == 5:
             self.prepare_data(timestamp)
         
     
@@ -77,7 +94,10 @@ class ImuLogger(Node):
             "time": timestamp,
             "real_pose_x": data["real_poses"]["pose_x"],
             "real_pose_y": data["real_poses"]["pose_y"],
-            "real_pose_z": data["real_poses"]["pose_z"]
+            "real_pose_z": data["real_poses"]["pose_z"],
+            "estimated_x": data["estimated_poses"]["pose_x"],
+            "estimated_y": data["estimated_poses"]["pose_y"],
+            "estimated_z": data["estimated_poses"]["pose_z"]
         }
 
         for imu_id in ["imu1", "imu2", "imu3"]:

@@ -1,9 +1,9 @@
 import rclpy
-from rclpy.node import Node
 from nav_msgs.msg import Odometry
-
 from tf2_ros import TransformBroadcaster
 from geometry_msgs.msg import TransformStamped
+from rclpy.node import Node
+
 
 class RealPoseBroadcaster(Node):
     def __init__(self):
@@ -16,15 +16,16 @@ class RealPoseBroadcaster(Node):
         self.transform_stamped.header.frame_id = "odom"
         self.transform_stamped.child_frame_id = "base_footprint_real"
 
-    def real_pose_callback(self, odom):
-
-        self.transform_stamped.transform.translation.x = odom.pose.pose.position.x
-        self.transform_stamped.transform.translation.y = odom.pose.pose.position.y
-        self.transform_stamped.transform.translation.z = odom.pose.pose.position.z
-        self.transform_stamped.transform.rotation.x = odom.pose.pose.orientation.x
-        self.transform_stamped.transform.rotation.x = odom.pose.pose.orientation.y
-        self.transform_stamped.transform.rotation.x = odom.pose.pose.orientation.z
-        self.transform_stamped.header.stamp = self.get_clock().now().to_msg()
+    
+    def real_pose_callback(self, msg):
+        self.transform_stamped.transform.translation.x = msg.pose.pose.position.x
+        self.transform_stamped.transform.translation.y = msg.pose.pose.position.y
+        self.transform_stamped.transform.translation.z = msg.pose.pose.position.z
+        self.transform_stamped.transform.rotation.x = msg.pose.pose.orientation.x
+        self.transform_stamped.transform.rotation.y = msg.pose.pose.orientation.y
+        self.transform_stamped.transform.rotation.z = msg.pose.pose.orientation.z
+        self.transform_stamped.transform.rotation.w = msg.pose.pose.orientation.w
+        self.transform_stamped.header.stamp = msg.header.stamp
 
         self.br.sendTransform(self.transform_stamped)
 
