@@ -35,7 +35,7 @@ class NoisyController(Node):
         self.theta = 0.0
 
         self.joint_sub = self.create_subscription(JointState, "joint_states", self.joint_callback, 10)
-        self.odom_pub = self.create_publisher(Odometry, "pilbot_controller/odom_noisy", 10)
+        self.odom_pub = self.create_publisher(Odometry, "/pilbot_controller/odom_noisy", 10)
         
         self.odom_msg = Odometry()
         self.odom_msg.header.frame_id = "odom"

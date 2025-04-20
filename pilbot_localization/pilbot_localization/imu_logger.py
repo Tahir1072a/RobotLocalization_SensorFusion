@@ -13,7 +13,7 @@ class ImuLogger(Node):
     def __init__(self):
         super().__init__("imu_logger")
 
-        self.imu_sub = self.create_subscription(Imu, "/imu1", lambda msg: self.imu_callback(msg=msg, imu_id="imu1"), 10)
+        self.imu_sub = self.create_subscription(Imu, "imu1", lambda msg: self.imu_callback(msg=msg, imu_id="imu1"), 10)
         self.imu_sub = self.create_subscription(Imu, "imu2", lambda msg: self.imu_callback(msg=msg, imu_id="imu2"), 10)
         self.imu_sub = self.create_subscription(Imu, "imu3", lambda msg: self.imu_callback(msg=msg, imu_id="imu3"), 10)
 
@@ -119,7 +119,7 @@ class ImuLogger(Node):
         line, rectangle, circle = cycles.line, cycles.rectangle, cycles.circle
         
         # Dosya daha önceden varsa yeni dosya açılabilir. Burayı dinamikleştir..
-        if line == 1:
+        if line == 1 or rectangle == 1 or circle == 1:
             self.df.to_excel("imu_saved_data.xlsx", index=False)
             self.get_logger().info("Döngü bitmiştir...")
             rclpy.shutdown()

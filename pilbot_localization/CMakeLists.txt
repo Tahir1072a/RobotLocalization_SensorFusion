@@ -22,6 +22,7 @@ install(
 install(PROGRAMS
   ${PROJECT_NAME}/imu_logger.py
   ${PROJECT_NAME}/imu_republisher.py
+  ${PROJECT_NAME}/pose_prediction.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

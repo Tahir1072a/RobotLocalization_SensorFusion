@@ -13,6 +13,7 @@ def noisy_controller(context, *args, **kwargs):
     noisy_controller_py = Node(
         package="pilbot_controller",
         executable="noisy_controller",
+        name="pilbot_noisy_controller",
         parameters=[{
             "wheel_radius": wheel_radius + wheel_radius_error,
             "wheel_separation": wheel_separation + wheel_separation_error,
@@ -55,6 +56,7 @@ def generate_launch_description():
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        name="pilbot_joint_state_broadcaster",
         arguments=["joint_state_broadcaster",
                    "--controller-manager", 
                    "/controller_manager"
@@ -64,6 +66,7 @@ def generate_launch_description():
     wheel_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        name="pilbot_velocity_controller",
         arguments=[
             "pilbot_controller",
             "--controller-manager", 
@@ -91,11 +94,13 @@ def generate_launch_description():
         }]
     )
     """
+
     noisy_controller_launch = OpaqueFunction(function=noisy_controller)
     
     real_pose_broadcaster = Node(
         package="pilbot_controller",
-        executable="real_pose_broadcaster"
+        executable="real_pose_broadcaster",
+        name="real_pose_broadcaster"
     )
 
     return LaunchDescription([
