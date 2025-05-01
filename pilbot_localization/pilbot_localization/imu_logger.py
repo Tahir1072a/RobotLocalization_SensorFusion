@@ -7,7 +7,7 @@ from pilbot_msgs.msg import MovementCycles
 from sensor_msgs.msg import Imu
 from threading import Lock
 
-# Estimate DEğerleri eklenecek. Ayrıca bir tane launch file yazılıp tüm launc file'lar aynı anda başlaması gerekiyor.
+# Estimate DEğerleri eklenecek. Ayrıca bir tane launch file yazılıp tüm launch file'lar aynı anda başlaması gerekiyor.
 # Not: Imu tanımları daha dinamik hale gitrilebilir, urdf dosyalarına bakmayı unutma xacro ifadeler kullanabilirsin. (refactor önerisi)
 class ImuLogger(Node):
     def __init__(self):
@@ -90,6 +90,9 @@ class ImuLogger(Node):
     def prepare_data(self, timestamp):
         data = self.buffer[timestamp]
 
+        estimated_error_x = abs(data["real_poses"]["pose_x"] - data["estimated_poses"]["pose_x"])
+        estimated_error_y = abs(data["real_poses"]["pose_y"] - data["estimated_poses"]["pose_y"])
+
         row = {
             "time": timestamp,
             "real_pose_x": data["real_poses"]["pose_x"],
@@ -97,7 +100,9 @@ class ImuLogger(Node):
             "real_pose_z": data["real_poses"]["pose_z"],
             "estimated_x": data["estimated_poses"]["pose_x"],
             "estimated_y": data["estimated_poses"]["pose_y"],
-            "estimated_z": data["estimated_poses"]["pose_z"]
+            "estimated_z": data["estimated_poses"]["pose_z"],
+            "estimated_error_x": estimated_error_x,
+            "estimated_error_y": estimated_error_y
         }
 
         for imu_id in ["imu1", "imu2", "imu3"]:

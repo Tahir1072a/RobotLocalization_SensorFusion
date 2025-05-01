@@ -61,11 +61,29 @@ def generate_launch_description():
         executable="imu_republisher.py"
     )
 
+    pose_prediction = Node(
+        package="pilbot_localization",
+        executable="pose_prediction.py"
+    )
+
+    imu_logger = Node(
+        package="pilbot_localization",
+        executable="imu_logger.py"
+    )
+
+    pose_logger = Node(
+        package="pilbot_localization",
+        executable="pose_logger.py"
+    )
+
     return LaunchDescription([
         static_transform_publisher,
         robot_localization,
         robot_localization_1,
         robot_localization_2,
         robot_localization_3,
-        imu_republisher_py
+        imu_republisher_py,
+        pose_prediction,
+        imu_logger,
+        pose_logger
     ])
