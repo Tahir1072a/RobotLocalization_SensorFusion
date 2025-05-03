@@ -74,27 +74,6 @@ def generate_launch_description():
         ]
     )
 
-    """
-    simple_controller = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["simple_velocity_controller",
-                   "--controller-manager",
-                   "/controller_manager"
-        ]
-    )
-    
-    simple_controller_py = Node(
-        package="pilbot_controller",
-        executable="simple_controller",
-        parameters=[{
-            "wheel_radius": wheel_radius,
-            "wheel_separation": wheel_separation,
-            "use_sim_time": use_sim_time
-        }]
-    )
-    """
-
     noisy_controller_launch = OpaqueFunction(function=noisy_controller)
     
     real_pose_broadcaster = Node(
