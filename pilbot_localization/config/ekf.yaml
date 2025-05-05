@@ -13,12 +13,12 @@ ekf_filter_node:
     odom0: /pilbot_controller/odom_noisy
     odom0_config: [false, false, false,
                    false, false, false,
-                   true,  true, false, # Kovaryans matriste y değeri için yüksek bir değer girmemek (yüksek değer güvenirliği azaltır) ve unu true olarak ayarlamak daha doğru bir yaklaşım olacaktır.
+                   true, false, false, # Kovaryans matriste y değeri için yüksek bir değer girmemek (yüksek değer güvenirliği azaltır) ve unu true olarak ayarlamak daha doğru bir yaklaşım olacaktır.
                    false, false, false]
     odom0_differantial: false
 
     # BİRDEN FAZLA IMU VERİSİ KULLANMAK!
-    # EKf filter birden fazla imu verisi ile beslenebilir. Filtre bu verileri şu şekilde kullanır: her iki iu'dan gelen verileri kovaryans matrislerinde değerlerine
+    # EKf filter birden fazla imu verisi ile beslenebilir. Filtre bu verileri şu şekilde kullanır: her iki imu'dan gelen verileri kovaryans matrislerinde değerlerine
     # göre güvenerek birleştirir. O yüzden kovaryans matrisleri sensörlerin noise değerlerine göre doğru bir şekilde ayarlanmalıdır.
 
     imu0: /imu_ekf_1 # Imu noisy değerler raporlayabileceği için, kullanılmayacak tüm değerleri false olarak ayarlamak daha doğru bir yaklaşım olacaktır.
@@ -27,23 +27,7 @@ ekf_filter_node:
                   false, false, false,
                   false, false, true,
                   true,  false, false]
-    imu0_differential: true # Bu parametre true olarak ayarlanırsa ekf filter'a imu verileri hıza dönüştürülüp gönderiliyor. (t ile t-1 zaman aralığında hız verisi hesaplanır.)
-    
-    imu1: /imu_ekf_2
-    imu1_config: [false, false, false,
-                  false, false, true,
-                  false, false, false,
-                  false, false, true,
-                  true,  false, false]
-    imu1_differential: true
-
-    imu2: /imu_ekf_3
-    imu2_config: [false, false, false,
-                  false, false, true,
-                  false, false, false,
-                  false, false, true,
-                  true,  false, false]
-    imu2_differential: false # Bu değeri her imu için true yapmak iyi bir yaklaşım değildir. N tane imu varsa n-1 tanesi true, 1 tanesi için false olmalıdır.
+    imu0_differential: false # Bu parametre true olarak ayarlanırsa ekf filter'a imu verileri hıza dönüştürülüp gönderiliyor. (t ile t-1 zaman aralığında hız verisi hesaplanır.)
 
     # Kovaryans Nedir?
     # Kovaryans, iki rastgele değişken arasındaki ilişkiyi ölçen istatistiksel bir terimdir.
