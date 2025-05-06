@@ -6,6 +6,7 @@ from rclpy.node import Node
 from nav_msgs.msg import Odometry
 from threading import Lock
 from pilbot_msgs.msg import MovementCycles
+from std_msgs.msg import Int16
 
 # Odometry fused data'dan gelen verileri alıp bunları real pose data'dan gelen veriler ile kıyaslayacak ve hata değerlerini pose_logger.xlns dosyasına loglayacak.
 class PoseLogger(Node):
@@ -20,10 +21,11 @@ class PoseLogger(Node):
         self.buffer_window = 0.01
         self.max_buffer_age = 1.0
 
-        self.create_subscription(Odometry, "/odometry/filtered_1", lambda msg: self.odometry_callback_("fused", msg), 20)
+        self.create_subscription(Odometry, "/odometry/filtered_fused", lambda msg: self.odometry_callback_("fused", msg), 20)
         self.create_subscription(Odometry, "/pilbot/real_pose", lambda msg: self.odometry_callback_("real", msg), 20)
 
         self.movement_cycle_sub = self.create_subscription(MovementCycles, "movement_cycles", self.cycles_callback, 10)
+        self.test_period_sub = self.create_subscription(Int16, "test_timer", self.test_period_callback, 10)
 
         self.timer = self.create_timer(1.0, self.cleanup_old_entries)
 
@@ -61,8 +63,13 @@ class PoseLogger(Node):
         real_pose = datas["real"]
         fused_pose = datas["fused"]
         
-        estimated_error_x = abs(float(real_pose.pose.pose.position.x) - float(fused_pose.pose.pose.position.x))
-        estimated_error_y = abs(float(real_pose.pose.pose.position.y) - float(fused_pose.pose.pose.position.y))
+        fused_pose_x = fused_pose.pose.pose.position.x
+        fused_pose_y = fused_pose.pose.pose.position.y
+        fused_pose_yaw = fused_pose.pose.pose.orientation.z
+
+        estimated_error_x = abs(float(real_pose.pose.pose.position.x) - float(fused_pose_x)) ** 2
+        estimated_error_y = abs(float(real_pose.pose.pose.position.y) - float(fused_pose_y)) ** 2
+        estimated_yaw_error = abs(float(real_pose.pose.pose.orientation.z) - float(fused_pose_yaw)) ** 2
         
         t1 = self.timestamp_to_float(real_pose.header)
         t2 = self.timestamp_to_float(fused_pose.header)
@@ -74,10 +81,13 @@ class PoseLogger(Node):
             "time": f"{avg_sec}.{avg_nsec:09d}",
             "real_pose_x": real_pose.pose.pose.position.x,
             "real_pose_y": real_pose.pose.pose.position.y,
-            "fused_pose_x": fused_pose.pose.pose.position.x,
-            "fused_pose_y": fused_pose.pose.pose.position.y,
+            "real_yaw": real_pose.pose.pose.orientation.z,
+            "fused_pose_x": fused_pose_x,
+            "fused_pose_y": fused_pose_y,
+            "fused_pose_yaw": fused_pose_yaw,
             "estimated_error_x": estimated_error_x,
-            "estimated_error_y": estimated_error_y
+            "estimated_error_y": estimated_error_y,
+            "estimated_yaw_error": estimated_yaw_error,
         }
 
         self.df = pd.concat([self.df, pd.DataFrame([row])], ignore_index=True)
@@ -95,6 +105,14 @@ class PoseLogger(Node):
         current_time = self.get_clock().now().nanoseconds / 1e9
         with self.buffer_lock:
             self.buffer = [entry for entry in self.buffer if (current_time - entry["timestamp"]) < self.max_buffer_age]
+
+    def test_period_callback(self, msg):
+        period = msg.data
+
+        if period == 1:
+            self.df.to_excel("pose_saved_data.xlsx", index=False)
+            self.get_logger().info("Test time is over!")
+            rclpy.shutdown()
 
 def main():
     rclpy.init()

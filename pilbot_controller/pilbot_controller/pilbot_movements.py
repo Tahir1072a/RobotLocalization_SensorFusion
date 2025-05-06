@@ -15,9 +15,9 @@ class PilbotMovements(Node):
         self.get_logger().info("Pilbot Movements Node has been started")
 
         self.declare_parameter("movement_type", "line") #rectangle, circle, line
-        self.declare_parameter("linear_speed", 1.25)
-        self.declare_parameter("angular_speed", 0.2)
-        self.declare_parameter("distance_to_travel", 8.0) # metre => for rectangle_movement and line
+        self.declare_parameter("linear_speed", 1.5)
+        self.declare_parameter("angular_speed", 0.4)
+        self.declare_parameter("distance_to_travel", 5.0) # metre => for rectangle_movement and line
 
         self.pub = self.create_publisher(TwistStamped, "pilbot_controller/cmd_vel", 10)
         self.movement_cycle_pub = self.create_publisher(MovementCycles, "movement_cycles", 10)

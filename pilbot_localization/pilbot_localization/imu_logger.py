@@ -6,6 +6,7 @@ from nav_msgs.msg import Odometry
 from pilbot_msgs.msg import MovementCycles
 from sensor_msgs.msg import Imu
 from threading import Lock
+from std_msgs.msg import Int16
 
 # Estimate DEğerleri eklenecek. Ayrıca bir tane launch file yazılıp tüm launch file'lar aynı anda başlaması gerekiyor.
 # Not: Imu tanımları daha dinamik hale gitrilebilir, urdf dosyalarına bakmayı unutma xacro ifadeler kullanabilirsin. (refactor önerisi)
@@ -20,6 +21,7 @@ class ImuLogger(Node):
         self.pilbot_pose_sub = self.create_subscription(Odometry, "pilbot/real_pose", self.pose_callback, 10)
         self.movement_cycle_sub = self.create_subscription(MovementCycles, "movement_cycles", self.cycles_callback, 10)
         self.estimated_pose_sub = self.create_subscription(Odometry, "odometry/filtered", self.estimated_pose_callback, 10)
+        self.test_period_sub = self.create_subscription(Int16, "test_timer", self.test_period_callback, 10)
 
         self.df = pd.DataFrame(columns=["time"])
 
@@ -29,6 +31,7 @@ class ImuLogger(Node):
     def estimated_pose_callback(self, msg):
         timestamp = self.get_timestamp(msg.header)
         position = msg.pose.pose.position
+        orientation = msg.pose.pose.orientation
 
         if self.buffer.get(timestamp) is None:
             self.buffer[timestamp] = {}
@@ -36,7 +39,8 @@ class ImuLogger(Node):
         self.buffer[timestamp]["estimated_poses"] = {
             "pose_x": position.x,
             "pose_y": position.y,
-            "pose_z": position.z
+            "pose_z": position.z,
+            "orientation_yaw": orientation.z,
         }
 
         if len(self.buffer[timestamp]) == 5:
@@ -45,6 +49,7 @@ class ImuLogger(Node):
     def pose_callback(self, msg):
         timestamp = self.get_timestamp(msg.header)
         position =  msg.pose.pose.position
+        orientation = msg.pose.pose.orientation
         
         if self.buffer.get(timestamp) is None:
             self.buffer[str(timestamp)] = {}
@@ -53,7 +58,8 @@ class ImuLogger(Node):
             self.buffer[timestamp]["real_poses"] = {
                 "pose_x": position.x,
                 "pose_y": position.y,
-                "pose_z": position.z
+                "pose_z": position.z,
+                "orientation_yaw": orientation.z,
             }
         
         if len(self.buffer[timestamp]) == 5:
@@ -90,19 +96,22 @@ class ImuLogger(Node):
     def prepare_data(self, timestamp):
         data = self.buffer[timestamp]
 
-        estimated_error_x = abs(data["real_poses"]["pose_x"] - data["estimated_poses"]["pose_x"])
-        estimated_error_y = abs(data["real_poses"]["pose_y"] - data["estimated_poses"]["pose_y"])
+        estimated_error_x = abs(float(data["real_poses"]["pose_x"]) - float(data["estimated_poses"]["pose_x"])) ** 2
+        estimated_error_y = abs(float(data["real_poses"]["pose_y"]) - float(data["estimated_poses"]["pose_y"])) ** 2
+        estimated_yaw_error = abs(float(data["real_poses"]["orientation_yaw"]) - float(data["estimated_poses"]["orientation_yaw"])) ** 2
 
         row = {
             "time": timestamp,
             "real_pose_x": data["real_poses"]["pose_x"],
             "real_pose_y": data["real_poses"]["pose_y"],
             "real_pose_z": data["real_poses"]["pose_z"],
+            "real_yaw": data["real_poses"]["orientation_yaw"],
             "estimated_x": data["estimated_poses"]["pose_x"],
             "estimated_y": data["estimated_poses"]["pose_y"],
-            "estimated_z": data["estimated_poses"]["pose_z"],
+            "estimated_yaw": data["estimated_poses"]["orientation_yaw"],
             "estimated_error_x": estimated_error_x,
-            "estimated_error_y": estimated_error_y
+            "estimated_error_y": estimated_error_y,
+            "estimated_yaw_error": estimated_yaw_error,
         }
 
         for imu_id in ["imu1", "imu2", "imu3"]:
@@ -127,6 +136,14 @@ class ImuLogger(Node):
         if line == 1 or rectangle == 1 or circle == 1:
             self.df.to_excel("imu_saved_data.xlsx", index=False)
             self.get_logger().info("Döngü bitmiştir...")
+            rclpy.shutdown()
+
+    def test_period_callback(self, msg):
+        period = msg.data
+
+        if period == 1:
+            self.df.to_excel("imu_saved_data.xlsx", index=False)
+            self.get_logger().info("Test time is over!")
             rclpy.shutdown()
 
 def main():

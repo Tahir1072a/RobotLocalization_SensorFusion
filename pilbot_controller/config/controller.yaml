@@ -42,10 +42,10 @@ pilbot_controller:
       x:
         has_velocity_limits: true
         max_velocity: 1.5
-        min_velocity: -0.75
-        has_acceleration_limits: true
-        max_acceleration: 1.0
-        min_acceleration: -1.0
+        min_velocity: -1.5
+        has_acceleration_limits: false
+        max_acceleration: 5.0
+        min_acceleration: -5.0
         has_jerk_limits: false
         max_jerk: 5.0
     angular:
@@ -53,8 +53,8 @@ pilbot_controller:
         has_velocity_limits: true
         max_velocity: 2.0
         min_velocity: -2.0
-        has_acceleration_limits: true
-        max_acceleration: 1.0
-        min_acceleration: -1.0
+        has_acceleration_limits: false
+        max_acceleration: 5.0
+        min_acceleration: -5.0
         has_jerk_limits: false
         max_jerk: 2.5

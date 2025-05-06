@@ -1,6 +1,6 @@
 ekf_filter_node:
   ros__parameters:
-    frequency: 50.0
+    frequency: 60.0
     two_d_mode: true
     publish_tf: true
     publish_acceleration: false
@@ -13,7 +13,8 @@ ekf_filter_node:
     odom0: /pilbot_controller/odom_noisy
     odom0_config: [false, false, false,
                    false, false, false,
-                   true, false, false, # Kovaryans matriste y değeri için yüksek bir değer girmemek (yüksek değer güvenirliği azaltır) ve unu true olarak ayarlamak daha doğru bir yaklaşım olacaktır.
+                   true,  true, false,
+                   false, false, false,
                    false, false, false]
     odom0_differantial: false
 
@@ -21,13 +22,13 @@ ekf_filter_node:
     # EKf filter birden fazla imu verisi ile beslenebilir. Filtre bu verileri şu şekilde kullanır: her iki imu'dan gelen verileri kovaryans matrislerinde değerlerine
     # göre güvenerek birleştirir. O yüzden kovaryans matrisleri sensörlerin noise değerlerine göre doğru bir şekilde ayarlanmalıdır.
 
-    imu0: /imu_ekf_1 # Imu noisy değerler raporlayabileceği için, kullanılmayacak tüm değerleri false olarak ayarlamak daha doğru bir yaklaşım olacaktır.
+    imu0: /imu_ekf_1
     imu0_config: [false, false, false,
-                  false, false, true,
+                  false, false, false, 
                   false, false, false,
                   false, false, true,
                   true,  false, false]
-    imu0_differential: false # Bu parametre true olarak ayarlanırsa ekf filter'a imu verileri hıza dönüştürülüp gönderiliyor. (t ile t-1 zaman aralığında hız verisi hesaplanır.)
+    imu0_differential: false
 
     # Kovaryans Nedir?
     # Kovaryans, iki rastgele değişken arasındaki ilişkiyi ölçen istatistiksel bir terimdir.
@@ -72,7 +73,7 @@ ekf_filter_node:
 
 ekf_filter_node_single1:
   ros__parameters:
-    frequency: 50.0
+    frequency: 60.0
     two_d_mode: true
     publish_tf: false
     publish_acceleration: false
@@ -86,12 +87,13 @@ ekf_filter_node_single1:
     odom0_config: [false, false, false,
                    false, false, false,
                    true,  true, false,
+                   false, false, false,
                    false, false, false]
     odom0_differantial: false
 
     imu0: /imu_ekf_1
     imu0_config: [false, false, false,
-                  false, false, true,
+                  false, false, false,
                   false, false, false,
                   false, false, true,
                   true,  false, false]
@@ -132,7 +134,7 @@ ekf_filter_node_single1:
 
 ekf_filter_node_single2:
   ros__parameters:
-    frequency: 50.0
+    frequency: 60.0
     two_d_mode: true
     publish_tf: false
     publish_acceleration: false
@@ -146,12 +148,13 @@ ekf_filter_node_single2:
     odom0_config: [false, false, false,
                    false, false, false,
                    true,  true, false,
+                   false, false, false,
                    false, false, false]
     odom0_differantial: false
 
-    imu0: /imu_ekf_2
+    imu0: /imu_ekf_1
     imu0_config: [false, false, false,
-                  false, false, true,
+                  false, false, false,
                   false, false, false,
                   false, false, true,
                   true,  false, false]
@@ -192,7 +195,7 @@ ekf_filter_node_single2:
 
 ekf_filter_node_single3:
   ros__parameters:
-    frequency: 50.0
+    frequency: 60.0
     two_d_mode: true
     publish_tf: false
     publish_acceleration: false
@@ -206,12 +209,13 @@ ekf_filter_node_single3:
     odom0_config: [false, false, false,
                    false, false, false,
                    true,  true, false,
+                   false, false, false,
                    false, false, false]
     odom0_differantial: false
 
-    imu0: /imu_ekf_3
+    imu0: /imu_ekf_1
     imu0_config: [false, false, false,
-                  false, false, true,
+                  false, false, false,
                   false, false, false,
                   false, false, true,
                   true,  false, false]

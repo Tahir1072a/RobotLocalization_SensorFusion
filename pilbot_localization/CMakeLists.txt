@@ -25,6 +25,7 @@ install(PROGRAMS
   ${PROJECT_NAME}/pose_prediction.py
   ${PROJECT_NAME}/pose_logger.py
   ${PROJECT_NAME}/draw_graphs.py
+  ${PROJECT_NAME}/test_timer.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

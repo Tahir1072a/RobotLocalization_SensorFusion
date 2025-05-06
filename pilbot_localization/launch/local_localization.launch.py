@@ -61,6 +61,14 @@ def generate_launch_description():
         executable="imu_republisher.py"
     )
 
+    test_timer = Node(
+        package="pilbot_localization",
+        executable="test_timer.py",
+        name="test_timer_node",
+        parameters=[{"test_period": 90.0}],
+        output="screen"
+    )
+
     pose_prediction = Node(
         package="pilbot_localization",
         executable="pose_prediction.py"
@@ -84,6 +92,7 @@ def generate_launch_description():
         robot_localization_3,
         imu_republisher_py,
         pose_prediction,
+        test_timer,
         imu_logger,
         pose_logger
     ])

@@ -65,66 +65,67 @@
     <gazebo reference="imu_link1">
         <sensor name="imu1" type="imu">
             <always_on>true</always_on>
-            <update_rate>100</update_rate>
-            <gz_frame_id>imu1_link</gz_frame_id>
-            <topic>imu1</topic>
+            <update_rate>100</update_rate> 
+            <gz_frame_id>imu1_link</gz_frame_id> 
+            <topic>imu1</topic> 
             <imu>
                 <angular_velocity>
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.000006108</stddev>
+                            <stddev>0.0006109</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.00002424</bias_stddev>
+                            <bias_stddev>0.00004848</bias_stddev>
                         </noise>
                     </x>
                     <y>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.000006108</stddev>
+                            <stddev>0.0006109</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.00002424</bias_stddev>
+                            <bias_stddev>0.00004848</bias_stddev>
                         </noise>
                     </y>
                     <z>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.000006108</stddev>
+                            <stddev>0.0006109</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.00002424</bias_stddev>
+                            <bias_stddev>0.00004848</bias_stddev>
                         </noise>
                     </z>
                 </angular_velocity>
+        
                 <linear_acceleration>
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.0001373</stddev>
+                            <stddev>0.01373</stddev>
                             <bias_mean>0.0</bias_mean>
                             <bias_stddev>0.0003923</bias_stddev>
                         </noise>
                     </x>
                     <y>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0001373</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.0003923</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.01373</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.0003923</bias_stddev>
+                        </noise>
                     </y>
                     <z>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0001373</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.0003923</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.01373</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.0003923</bias_stddev>
+                        </noise>
                     </z>
                 </linear_acceleration>
-            </imu>
+            </imu>        
         </sensor>
     </gazebo>
-    
+        
     <!-- bno055 -->
     <!-- Based on bno055 datasheet-->
     <!-- https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bno055-ds000.pdf -->
@@ -149,7 +150,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev>
+                            <bias_stddev>0.01745329251</bias_stddev> <!-- 0.01745329251-->
                         </noise>
                     </y>
                     <z>
@@ -165,23 +166,23 @@
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>    <!-- 100 ODR(Output Data Rate) için 32hz bandwith-->
-                            <stddev>0.0014715</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
+                            <stddev>0.0015</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.785</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
+                            <bias_stddev>0.7848</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
                         </noise>
                     </x>
                     <y>
                     <noise type="gaussian">
                         <mean>0.0</mean>
-                        <stddev>0.0014715</stddev>
+                        <stddev>0.0015</stddev>
                         <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.785</bias_stddev>
+                        <bias_stddev>0.7848</bias_stddev>
                     </noise>
                     </y>
                     <z>
                     <noise type="gaussian">
                         <mean>0.0</mean>
-                        <stddev>0.0014715</stddev>
+                        <stddev>0.0015</stddev>
                         <bias_mean>0.0</bias_mean>
                         <bias_stddev>0.7848</bias_stddev>
                     </noise>
@@ -228,25 +229,25 @@
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>    <!-- 100 ODR(Output Data Rate) için 32hz bandwith-->
-                            <stddev>0.0014715</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
+                            <stddev>0.0015</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.4903</bias_stddev>
+                            <bias_stddev>0.7848</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
                         </noise>
                     </x>
                     <y>
                     <noise type="gaussian">
                         <mean>0.0</mean>
-                        <stddev>0.0014715</stddev>
+                        <stddev>0.0015</stddev>
                         <bias_mean>0.0</bias_mean>
-                        <bias_stddev>1.471e-3</bias_stddev>
+                        <bias_stddev>0.7848</bias_stddev>
                     </noise>
                     </y>
                     <z>
                     <noise type="gaussian">
                         <mean>0.0</mean>
-                        <stddev>0.0014715</stddev>
+                        <stddev>0.0015</stddev>
                         <bias_mean>0.0</bias_mean>
-                        <bias_stddev>1.471e-3</bias_stddev>
+                        <bias_stddev>0.7848</bias_stddev>
                     </noise>
                     </z>
                 </linear_acceleration>
