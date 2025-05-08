@@ -42,10 +42,18 @@ def generate_launch_description():
             )
         ]
     )
+    
+    robot_movement = Node(
+        package="pilbot_controller",
+        executable="pilbot_movement",
+        name="pilbot_movement",
+        output="screen"
+    )
 
     return LaunchDescription([
         gazebo,
         localization,
         controller,
-        rviz2
+        #rviz2,
+        robot_movement
     ])

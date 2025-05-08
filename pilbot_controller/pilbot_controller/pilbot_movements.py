@@ -14,9 +14,9 @@ class PilbotMovements(Node):
         super().__init__("pilbot_movements")
         self.get_logger().info("Pilbot Movements Node has been started")
 
-        self.declare_parameter("movement_type", "line") #rectangle, circle, line
-        self.declare_parameter("linear_speed", 1.5)
-        self.declare_parameter("angular_speed", 0.4)
+        self.declare_parameter("movement_type", "circle") #rectangle, circle, line
+        self.declare_parameter("linear_speed", 0.31)
+        self.declare_parameter("angular_speed", 0.03)
         self.declare_parameter("distance_to_travel", 5.0) # metre => for rectangle_movement and line
 
         self.pub = self.create_publisher(TwistStamped, "pilbot_controller/cmd_vel", 10)
@@ -53,6 +53,10 @@ class PilbotMovements(Node):
         self.is_moving = False
         self.is_stop = False
         self.is_turning_right = False
+
+        # Circle Movement
+        self.first_move = True
+        self.create_timer(2, self.circle_movement)
 
     def rectangle_movement(self, vehicle_pose):
         x, y, theta = vehicle_pose.x, vehicle_pose.y, vehicle_pose.z
@@ -156,6 +160,19 @@ class PilbotMovements(Node):
 
         return linear_speed
         
+    def circle_movement(self):
+        if self.first_move:
+            self.linear_speed = 0.31
+            self.angular_speed = 0.03
+            self.first_move = False
+        if self.linear_speed >= 5.2 or self.angular_speed >= 1.0:
+            self.linear_speed -= self.linear_speed * 0.5
+            self.angular_speed -= self.angular_speed * 0.5
+        else:
+            self.linear_speed += self.linear_speed * 0.1
+            self.angular_speed += self.angular_speed * 0.1
+
+        self.get_logger().info(f"Linear speed: {self.linear_speed}, Angular speed: {self.angular_speed}")
 
     def pose_callback(self, msg):
         pilbot_position = msg.pose.pose.position
@@ -180,7 +197,7 @@ class PilbotMovements(Node):
         self.pub.publish(published_msg)
 
         
-        
+    
 
 def main():
     rclpy.init()

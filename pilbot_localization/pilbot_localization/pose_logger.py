@@ -94,7 +94,7 @@ class PoseLogger(Node):
 
     def cycles_callback(self, cycles):
         line, rectangle, circle = cycles.line, cycles.rectangle, cycles.circle
-        
+
         # Dosya daha önceden varsa yeni dosya açılabilir. Burayı dinamikleştir..
         if line == 1 or rectangle == 1 or circle == 1:
             self.df.to_excel("pose_saved_data.xlsx", index=False)
@@ -111,6 +111,12 @@ class PoseLogger(Node):
 
         if period == 1:
             self.df.to_excel("pose_saved_data.xlsx", index=False)
+            rmse_x = self.df["estimated_error_x"].mean() ** 0.5
+            rmse_y = self.df["estimated_error_y"].mean() ** 0.5
+
+            self.get_logger().info(f"Çoklu imu hatası x: {rmse_x} y: {rmse_y}")
+            
+            #self.df.to_excel("pose_saved_data.xlsx", index=False)
             self.get_logger().info("Test time is over!")
             rclpy.shutdown()
 

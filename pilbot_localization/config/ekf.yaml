@@ -2,7 +2,7 @@ ekf_filter_node:
   ros__parameters:
     frequency: 60.0
     two_d_mode: true
-    publish_tf: true
+    publish_tf: false
     publish_acceleration: false
 
     map_frame: map
@@ -13,7 +13,7 @@ ekf_filter_node:
     odom0: /pilbot_controller/odom_noisy
     odom0_config: [false, false, false,
                    false, false, false,
-                   true,  true, false,
+                   false,  true, false,
                    false, false, false,
                    false, false, false]
     odom0_differantial: false
@@ -22,7 +22,7 @@ ekf_filter_node:
     # EKf filter birden fazla imu verisi ile beslenebilir. Filtre bu verileri şu şekilde kullanır: her iki imu'dan gelen verileri kovaryans matrislerinde değerlerine
     # göre güvenerek birleştirir. O yüzden kovaryans matrisleri sensörlerin noise değerlerine göre doğru bir şekilde ayarlanmalıdır.
 
-    imu0: /imu_ekf_1
+    imu0: /imu_ekf_2
     imu0_config: [false, false, false,
                   false, false, false, 
                   false, false, false,
@@ -91,9 +91,9 @@ ekf_filter_node_single1:
                    false, false, false]
     odom0_differantial: false
 
-    imu0: /imu_ekf_1
+    imu0: /imu_ekf_2
     imu0_config: [false, false, false,
-                  false, false, false,
+                  false, false, true,
                   false, false, false,
                   false, false, true,
                   true,  false, false]
@@ -147,14 +147,14 @@ ekf_filter_node_single2:
     odom0: /pilbot_controller/odom_noisy
     odom0_config: [false, false, false,
                    false, false, false,
-                   true,  true, false,
+                   true,  true,  false,
                    false, false, false,
                    false, false, false]
     odom0_differantial: false
 
-    imu0: /imu_ekf_1
+    imu0: /imu_ekf_3
     imu0_config: [false, false, false,
-                  false, false, false,
+                  false, false, true,
                   false, false, false,
                   false, false, true,
                   true,  false, false]
@@ -215,7 +215,7 @@ ekf_filter_node_single3:
 
     imu0: /imu_ekf_1
     imu0_config: [false, false, false,
-                  false, false, false,
+                  false, false, true,
                   false, false, false,
                   false, false, true,
                   true,  false, false]

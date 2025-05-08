@@ -55,7 +55,7 @@ def generate_launch_description():
             ("odometry/filtered", "odometry/filtered_3"),
         ]
     )
-
+    
     imu_republisher_py = Node(
         package="pilbot_localization",
         executable="imu_republisher.py"
@@ -84,15 +84,21 @@ def generate_launch_description():
         executable="pose_logger.py"
     )
 
+    virtual_imu_publisher = Node(
+        package="pilbot_localization",
+        executable="virtual_imu_publisher.py"
+    )
+
     return LaunchDescription([
         static_transform_publisher,
         robot_localization,
-        robot_localization_1,
-        robot_localization_2,
-        robot_localization_3,
+        #robot_localization_1,
+        #robot_localization_2,
+        #robot_localization_3,
         imu_republisher_py,
-        pose_prediction,
+        virtual_imu_publisher,
+        #pose_prediction,
         test_timer,
         imu_logger,
-        pose_logger
+        #pose_logger,
     ])

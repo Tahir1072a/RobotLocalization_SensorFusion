@@ -32,12 +32,11 @@ def main():
     time.sleep(1)
 
     imu_pub_1 = node.create_publisher(Imu, "imu_ekf_1", 10)
-    imu_sub = node.create_subscription(Imu, "/imu1", imu_callback ,10)
+    node.create_subscription(Imu, "/imu1", imu_callback ,10)
     imu_pub_2 = node.create_publisher(Imu, "imu_ekf_2", 10)
-    imu_sub = node.create_subscription(Imu, "/imu2", imu_callback ,10)
+    node.create_subscription(Imu, "/imu2", imu_callback ,10)
     imu_pub_3 = node.create_publisher(Imu, "imu_ekf_3", 10)
-    imu_sub = node.create_subscription(Imu, "/imu3", imu_callback ,10)
-
+    node.create_subscription(Imu, "/imu3", imu_callback ,10)
 
     rclpy.spin(node)
     rclpy.shutdown()

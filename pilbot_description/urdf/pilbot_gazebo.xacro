@@ -73,7 +73,7 @@
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.0006109</stddev>
+                            <stddev>0.000006109</stddev>
                             <bias_mean>0.0</bias_mean>
                             <bias_stddev>0.00004848</bias_stddev>
                         </noise>
@@ -81,7 +81,7 @@
                     <y>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.0006109</stddev>
+                            <stddev>0.000006109</stddev>
                             <bias_mean>0.0</bias_mean>
                             <bias_stddev>0.00004848</bias_stddev>
                         </noise>
@@ -89,7 +89,7 @@
                     <z>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.0006109</stddev>
+                            <stddev>0.000006109</stddev>
                             <bias_mean>0.0</bias_mean>
                             <bias_stddev>0.00004848</bias_stddev>
                         </noise>
@@ -100,25 +100,25 @@
                     <x>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.01373</stddev>
+                            <stddev>0.0013734</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.0003923</bias_stddev>
+                            <bias_stddev>0.0004</bias_stddev> <!-- 0.0003923-->
                         </noise>
                     </x>
                     <y>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.01373</stddev>
+                            <stddev>0.0013734</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.0003923</bias_stddev>
+                            <bias_stddev>0.0004</bias_stddev>
                         </noise>
                     </y>
                     <z>
                         <noise type="gaussian">
                             <mean>0.0</mean>
-                            <stddev>0.01373</stddev>
+                            <stddev>0.0013734</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.0003923</bias_stddev>
+                            <bias_stddev>0.0004</bias_stddev>
                         </noise>
                     </z>
                 </linear_acceleration>
@@ -142,7 +142,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>  <!-- Noise Density, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev> <!-- Bias instability, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
+                            <bias_stddev>0.0035</bias_stddev> <!-- Bias instability, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
                         </noise>
                     </x>
                     <y>
@@ -150,7 +150,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev> <!-- 0.01745329251-->
+                            <bias_stddev>0.0035</bias_stddev> <!-- 0.01745329251-->
                         </noise>
                     </y>
                     <z>
@@ -158,7 +158,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev>
+                            <bias_stddev>0.0035</bias_stddev> <!-- 10 üssü -5 -->
                         </noise>
                     </z>
                 </angular_velocity>
@@ -168,24 +168,24 @@
                             <mean>0.0</mean>    <!-- 100 ODR(Output Data Rate) için 32hz bandwith-->
                             <stddev>0.0015</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.7848</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
+                            <bias_stddev>0.008</bias_stddev>  <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
                         </noise>
                     </x>
                     <y>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0015</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.7848</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0015</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.008</bias_stddev> 
+                        </noise>
                     </y>
                     <z>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0015</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.7848</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0015</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.008</bias_stddev> 
+                        </noise>
                     </z>
                 </linear_acceleration>
             </imu>
@@ -205,7 +205,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>  <!-- Noise Density, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev> <!-- Bias instability, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
+                            <bias_stddev>0.0035</bias_stddev> <!-- Bias instability, radyan cinsinden! (sensörün tipik davranışı modellenmiştir) -->
                         </noise>
                     </x>
                     <y>
@@ -213,7 +213,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev>
+                            <bias_stddev>0.0035</bias_stddev> <!-- 0.01745329251-->
                         </noise>
                     </y>
                     <z>
@@ -221,7 +221,7 @@
                             <mean>0.0</mean>
                             <stddev>0.001745329251</stddev>
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.01745329251</bias_stddev>
+                            <bias_stddev>0.0035</bias_stddev> <!-- 10 üssü -5 -->
                         </noise>
                     </z>
                 </angular_velocity>
@@ -231,24 +231,24 @@
                             <mean>0.0</mean>    <!-- 100 ODR(Output Data Rate) için 32hz bandwith-->
                             <stddev>0.0015</stddev> <!-- Output Noise Density, m/s^2 cinsinde, sensorün tipik davranışı ele alınmıştır. -->
                             <bias_mean>0.0</bias_mean>
-                            <bias_stddev>0.7848</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
+                            <bias_stddev>0.008</bias_stddev> <!-- zero g offset: Burada, imu hareket etmediği halde üretilen gürültüdür. -->
                         </noise>
                     </x>
                     <y>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0015</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.7848</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0015</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.008</bias_stddev>
+                        </noise>
                     </y>
                     <z>
-                    <noise type="gaussian">
-                        <mean>0.0</mean>
-                        <stddev>0.0015</stddev>
-                        <bias_mean>0.0</bias_mean>
-                        <bias_stddev>0.7848</bias_stddev>
-                    </noise>
+                        <noise type="gaussian">
+                            <mean>0.0</mean>
+                            <stddev>0.0015</stddev>
+                            <bias_mean>0.0</bias_mean>
+                            <bias_stddev>0.008</bias_stddev>
+                        </noise>
                     </z>
                 </linear_acceleration>
             </imu>

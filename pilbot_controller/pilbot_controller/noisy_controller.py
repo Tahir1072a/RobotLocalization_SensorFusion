@@ -52,8 +52,8 @@ class NoisyController(Node):
 
 
     def joint_callback(self, msg):
-        wheel_encoder_left = msg.position[1] + np.random.normal(0, 0.005) # 2. parametre standart sapmayı verir. Ayrıca bu normal dağılım, gaussion dağılımına karşılık gelmektedir.
-        wheel_encoder_right = msg.position[0] + np.random.normal(0, 0.005)
+        wheel_encoder_left = msg.position[1] + np.random.normal(0, 0.05) # 2. parametre standart sapmayı verir. Ayrıca bu normal dağılım, gaussion dağılımına karşılık gelmektedir.
+        wheel_encoder_right = msg.position[0] + np.random.normal(0, 0.05)
         dp_left = wheel_encoder_left - self.prev_pos_left_wheel
         dp_right = wheel_encoder_right - self.prev_pos_right_wheel
         dt = Time.from_msg(msg.header.stamp) - self.prev_time

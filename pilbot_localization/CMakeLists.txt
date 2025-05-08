@@ -26,6 +26,8 @@ install(PROGRAMS
   ${PROJECT_NAME}/pose_logger.py
   ${PROJECT_NAME}/draw_graphs.py
   ${PROJECT_NAME}/test_timer.py
+  ${PROJECT_NAME}/virtual_imu_publisher.py
+  ${PROJECT_NAME}/draw_graphs_2.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
