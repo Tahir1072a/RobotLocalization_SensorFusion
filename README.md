@@ -19,6 +19,7 @@ Bu çalışma, özellikle aşağıdaki sensör füzyonu yaklaşımlarını incel
 * **Gazebo Simülasyonu:** Farklı senaryoların ve sensör yapılandırmalarının kontrollü bir ortamda test edilebilmesi.
   
 ## 🛠️ Test Sonuçları
+* **Test Açıklama:** Testler, her iki saniyede hızı %10 artan bir aracın 90 saniye boyunca daire çizmesi sonucu oluşturulmuştur. Max lineer hız: 5.2 m/s, Max. angular hız: 1.2 m/s'dir. Araç hız limitlerine ulaşınca ani frenleme yapıp, hızı %50 azaltılmıştır
 * **X Eksenindeki Hata Grafiği:** ![X Ekseni Hata Grafiği](ONLY_average_pos_error_x_first_50s_rmse.png)
 * **Y Eksenindeki Hata Grafiği:** ![X Ekseni Hata Grafiği](ONLY_average_pos_error_y_first_50s_rmse.png)
 
